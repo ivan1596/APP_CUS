@@ -35,6 +35,23 @@
             <ion-label>Cognome</ion-label>
             <ion-input [(ngModel)]= "profilo.cognome" name='cognome'></ion-input>
         </ion-item>
+
+        <ion-item>
+          <ion-label>Data Nascita</ion-label>
+          <ion-datetime displayFormat="DD/MM/YYYY" [(ngModel)]= "profilo.datanascita" name='datanascita'></ion-datetime>
+        </ion-item>
+
+        <ion-item>
+          <ion-label>Città</ion-label>
+          <ion-input [(ngModel)]= "profilo.citta" name='citta'></ion-input>
+          
+        </ion-item>
+
+        <ion-item>
+          <ion-label>Indirizzo</ion-label>
+          <ion-input [(ngModel)]= "profilo.indirizzo" name='indirizzo'></ion-input>
+        </ion-item>
+
       <div *ngIf="password.errors?.minlength" class="alert alert-danger">LA PASSWORD DEVE AVERE MINIMO 6 CARATTERI</div>
       <div *ngIf="password.errors?.required" class="alert alert-danger"  background-color="white">PASSWORD OBBLIGATORIA</div>
     </ion-list>

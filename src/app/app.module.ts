@@ -47,6 +47,7 @@ import { AngularFireDatabaseModule } from 'angularfire2/database';
     AngularFireModule.initializeApp(FIREBASE_CONFIG),
     AngularFireAuthModule,
     AngularFireDatabaseModule,
+    
     IonicModule.forRoot(MyApp)
   ],
   bootstrap: [IonicApp],

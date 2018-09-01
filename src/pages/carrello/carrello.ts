@@ -6,6 +6,8 @@ import { map } from 'rxjs/operators';
 import { AlertController } from 'ionic-angular';
 import { HomePage } from '../home/home';
 import { OrdiniPage } from '../ordini/ordini';
+import { ToastController } from 'ionic-angular';
+
 
 /**
  * Generated class for the CarrelloPage page.
@@ -21,14 +23,24 @@ import { OrdiniPage } from '../ordini/ordini';
 })
 export class CarrelloPage {
 
-  constructor(public navCtrl: NavController, public navParams: NavParams, public http: Http,public alertCtrl: AlertController) {
+  constructor(public navCtrl: NavController, public navParams: NavParams, public http: Http,
+    public alertCtrl: AlertController, public toastCtrl: ToastController) {
   }
+
   visualizzaProdotti= [];
   
   
   user = firebase.auth().currentUser;
   email = this.user.email;
 
+  removeToast() {
+    const toast = this.toastCtrl.create({
+      message: 'Prodotto eliminato dal carrello',
+      duration: 1500,
+      position: 'top'
+    });
+    toast.present();
+  }
   
 
     totaleOrdine() : number{
@@ -39,9 +51,9 @@ export class CarrelloPage {
       prodotto = p.prezzo*p.quantita;
       sum = prodotto + sum;
       
-    });
-    //console.log('somma'+ sum);
-    return sum;
+      });
+      
+      return sum;
      
   } 
 
@@ -50,20 +62,22 @@ export class CarrelloPage {
 
   
   showConfirm() {
+
+    
     const confirm = this.alertCtrl.create({
       title: 'Ordine Confermato!',
-      message: 'Grazie per aver acquistato nel nostro negozio!',
+      message: "Grazie per aver acquistato nel nostro negozio! L'ordine verrà spedito presso il suo indirizzo!  ",
       buttons: [
         {
           text: 'Home',
           handler: () => {
-            this.navCtrl.push(HomePage);
+            this.navCtrl.setRoot(HomePage);
           }
         },
         {
           text: 'I miei Ordini',
           handler: () => {
-            this.navCtrl.push(OrdiniPage);
+            this.navCtrl.setRoot(OrdiniPage);
             //this.navCtrl.push(OrdiniPage);
           }
         }
@@ -92,6 +106,7 @@ export class CarrelloPage {
   ).subscribe(response => {
     console.log('GET Response:', response);
   });
+  this.removeToast();
   
 }
   

@@ -7,28 +7,35 @@
 <ion-header>
 
   <ion-navbar>
-    <ion-title>datiPersonali</ion-title>
+    <ion-title>Dati Personali</ion-title>
   </ion-navbar>
 
 </ion-header>
 
 
 <ion-content padding>
+  <ion-card>
 
-<ion-item>
-  <ion-label floating>Username</ion-label>
-  <ion-input [(ngModel)]= "profilo.username"></ion-input>
-</ion-item>
+    <ion-item>
+      <ion-avatar item-start>
+        <img src="assets/img/utKKQKyDQoiCMhu0pe0I__soccer_player-heading-photo.png">
+      </ion-avatar>
+      <h2>{{ (datiProfilo | async)?.username }}</h2>
+      <p>Nato il:{{ (datiProfilo | async)?.datanascita }}</p>
+    </ion-item>
+  
+    
+  
+    <ion-card-content>
+      <p>Nome: {{ (datiProfilo | async)?.nome }}</p>
+      <p>Cognome: {{ (datiProfilo | async)?.cognome }}</p>
+      <p>Città: {{ (datiProfilo | async)?.citta }}</p>
+      <p>Indirizzo: {{ (datiProfilo | async)?.indirizzo }}</p>
+    </ion-card-content>
+  
+    
+  
+  </ion-card>
 
-<ion-item>
-    <ion-label floating>Nome</ion-label>
-    <ion-input [(ngModel)]= "profilo.nome"></ion-input>
-</ion-item>
-
-<ion-item>
-    <ion-label floating>Cognome</ion-label>
-    <ion-input [(ngModel)]= "profilo.cognome"></ion-input>
-</ion-item>
-<button ion-button clear block (click)='creaProfilo()'>Crea Profilo</button>
 
 </ion-content>

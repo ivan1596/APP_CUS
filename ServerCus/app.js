@@ -23,11 +23,11 @@ app.use(methodOverride());
 app.use(cors());
 
 
-app.use(function(req, res, next) {
+/* app.use(function(req, res, next) {
   res.header("Access-Control-Allow-Origin", "*");
   res.header("Access-Control-Allow-Headers", "Origin, X-Requested-With, Content-Type, Accept");
   next();
-});
+}); */
 
 
 app.get('/prodotti', function (req, res) {
@@ -45,21 +45,14 @@ app.get('/prodotti', function (req, res) {
     
     //var prodottiList=JSON.stringify(obj);
     res.json(productList);
-    console.log("prodotti catalogo inviati");
+    //console.log("prodotti catalogo inviati");
 
   })
 });
 
 app.post('/aggiornaCarrello',function(req,res){
-  console.log('req.body= ',req.body);
+  //console.log('req.body= ',req.body);
   var prodottoReq=JSON.parse(req.body);
-  //var utente = prodottoReq.Utente; 
-  /* req.body.forEach(p => {
-    var utente = p.utente;
-    console.log(utente);
-    
-  }); */ 
-  //console.log(utente);
   var utente = prodottoReq.utente;
   var codice = prodottoReq.codice;
   var numProd= prodottoReq.quantita;
@@ -72,15 +65,7 @@ app.post('/aggiornaCarrello',function(req,res){
 });
 
 app.post('/confermaOrdine',function(req,res){
-  console.log('req.body ordine= ',req.body);
-  /* var dataCorrente = new Date(); 
-  var dataS = dataCorrente.getDate() + "/"
-                + (dataCorrente.getMonth()+1)  + "/" 
-                + dataCorrente.getFullYear() ;
-  console.log("Data" + dataS); */
-  
-  //var prodottoReq=JSON.parse(req.body);
-  //var utente = prodottoReq.Utente; 
+  //console.log('req.body ordine= ',req.body);
   req.body.forEach(p => {
   var dataCorrente = new Date(); 
   var data = dataCorrente.getDate() + "/" + (dataCorrente.getMonth()+1)  + "/" + dataCorrente.getFullYear();
@@ -120,7 +105,7 @@ app.post('/confermaOrdine',function(req,res){
     listaProdotti = prodottiObj;
     
     res.json(listaProdotti);
-    console.log("prodotti carrello inviati");
+    //console.log("prodotti carrello inviati");
       
      
      },utente)
@@ -128,7 +113,7 @@ app.post('/confermaOrdine',function(req,res){
   });
 
   app.post('/ordini', function (req, res) {
-    console.log ('body req !stringify'+req.body);
+    //console.log ('body req !stringify'+req.body);
     
     var ObjUtente = JSON.parse(req.body);
     var utente = ObjUtente.eUtente;
@@ -146,7 +131,7 @@ app.post('/confermaOrdine',function(req,res){
     listaProdotti = prodottiObj;
     
     res.json(listaProdotti);
-    console.log("prodotti carrello inviati");
+    //console.log("prodotti carrello inviati");
       
      
      },utente)
@@ -154,7 +139,7 @@ app.post('/confermaOrdine',function(req,res){
   });
 
   app.post('/addPreferiti',function(req,res){
-    console.log('req.body= ',req.body);
+    //console.log('req.body= ',req.body);
     var prodottoReq=JSON.parse(req.body);
     var utente = prodottoReq.utente;
     var codice = prodottoReq.codice;
@@ -166,7 +151,7 @@ app.post('/confermaOrdine',function(req,res){
   });
 
   app.post('/preferiti', function (req, res) {
-    console.log ('body req !stringify'+req.body);
+    //console.log ('body req !stringify'+req.body);
     
     var ObjUtente = JSON.parse(req.body);
     var utente = ObjUtente.eUtente;

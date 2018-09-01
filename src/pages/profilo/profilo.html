@@ -12,7 +12,7 @@
         <img src="assets/img/utKKQKyDQoiCMhu0pe0I__soccer_player-heading-photo.png" />
       </ion-avatar>
       <h2>
-        Ciao, {{email}}
+        Ciao {{ (datiProfilo | async)?.username }}
       </h2>
     </ion-item>
   </ion-list>

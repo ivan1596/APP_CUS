@@ -3,6 +3,7 @@ import { IonicPage, NavController, NavParams } from 'ionic-angular';
 import { Http } from '@angular/http';
 import { map } from 'rxjs/operators';
 import firebase from 'firebase';
+import { ToastController } from 'ionic-angular';
 
 /**
  * Generated class for the PreferitiPage page.
@@ -18,7 +19,7 @@ import firebase from 'firebase';
 })
 export class PreferitiPage {
 
-  constructor(public navCtrl: NavController, public navParams: NavParams,public http: Http) {
+  constructor(public navCtrl: NavController, public navParams: NavParams,public http: Http,public toastCtrl: ToastController) {
   }
   visualizzaProdotti= [];
   user = firebase.auth().currentUser;
@@ -30,9 +31,21 @@ export class PreferitiPage {
     var codice = p.codice;
     this.http.get('http://localhost:8080/rimuoviPreferito/' + this.email+'/'+codice).pipe(
       map(res => res.json())
-  ).subscribe(response => {
+    ).subscribe(response => {
       console.log('GET Response:', response);
-  });
+    });
+    this.removeToast();
+  }
+
+  
+
+  removeToast() {
+    const toast = this.toastCtrl.create({
+      message: 'Prodotto eliminato dai preferiti',
+      duration: 1500,
+      position: 'top'
+    });
+    toast.present();
   }
 
   ionViewDidLoad() {

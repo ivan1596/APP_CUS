@@ -6,6 +6,8 @@ import { OrdiniPage } from '../ordini/ordini';
 import firebase from 'firebase';
 import { PreferitiPage } from '../preferiti/preferiti';
 import { DatiPersonaliPage } from '../dati-personali/dati-personali';
+import { AngularFireDatabase} from 'angularfire2/database';
+import { Observable } from 'rxjs';
 
 @Component({
   selector: 'page-profilo',
@@ -13,7 +15,9 @@ import { DatiPersonaliPage } from '../dati-personali/dati-personali';
 })
 export class ProfiloPage {
 
-  constructor(public navCtrl: NavController, public afAuth: AngularFireAuth) {
+  datiProfilo : Observable<any>;
+
+  constructor(public navCtrl: NavController, public afAuth: AngularFireAuth,private afDatabase : AngularFireDatabase) {
   }
 
 
@@ -35,6 +39,12 @@ export class ProfiloPage {
   logout(){
     this.afAuth.auth.signOut();
 	  this.navCtrl.setRoot(LoginPage);
+  }
+
+  ionViewDidLoad() {
+    this.afAuth.authState.take(1).subscribe(data => {
+     this.datiProfilo = this.afDatabase.object(`Profilo/${data.uid}`).valueChanges()
+    })
   }
   
 }

@@ -3,6 +3,7 @@ import { IonicPage, NavController, NavParams } from 'ionic-angular';
 import firebase from 'firebase';
 import { Http } from '@angular/http';
 import { map } from 'rxjs/operators';
+import { HomePage } from '../home/home';
 
 /**
  * Generated class for the OrdiniPage page.
@@ -24,6 +25,10 @@ export class OrdiniPage {
   user = firebase.auth().currentUser;
   
   email = this.user.email;
+
+  goToHome(){
+    this.navCtrl.setRoot(HomePage);
+  }
 
   ionViewDidLoad() {
     var eUtente = this.email;
