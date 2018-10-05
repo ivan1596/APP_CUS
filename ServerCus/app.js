@@ -202,6 +202,70 @@ app.post('/confermaOrdine',function(req,res){
     
   });
 
+  app.get('/corsi', function (req, res) {
+    sqlite.getCorsi( function (Corsi) {
+      var corsi ={};
+      var listaCorsi={};
+      corsi.Corsi = Corsi;
+      
+      var stringCorsi=JSON.stringify(corsi);// prodotto stringato del db da parsare 
+      
+      var corsiJson= JSON.parse(stringCorsi);
+      
+      var obj = corsiJson;
+      listaCorsi = corsiJson;
+      
+     
+      res.json(listaCorsi);
+     
+  
+    })
+  });
+
+  app.post('/addIscritto',function(req,res){
+    //console.log('req.body= ',req.body);
+    var prodottoReq=JSON.parse(req.body);
+    var utente = prodottoReq.utente;
+    var nomecorso = prodottoReq.nomeCorso;
+    var giorni = prodottoReq.giorni;
+    var orario = prodottoReq.orario; 
+    var immagine = prodottoReq.immagine;
+    sqlite.aggiungiIscritto(utente,nomecorso,giorni,orario,immagine);
+    
+  });
+
+  app.post('/mieicorsi', function (req, res) {
+    var ObjUtente = JSON.parse(req.body);
+    var utente = ObjUtente.eUtente;
+    sqlite.getMieiCorsi( function (Corsi) {
+      var corsi ={};
+      var listaCorsi={};
+      corsi.Corsi = Corsi;
+      
+      var stringCorsi=JSON.stringify(corsi);// prodotto stringato del db da parsare 
+      
+      var corsiJson= JSON.parse(stringCorsi);
+      
+      var obj = corsiJson;
+      listaCorsi = corsiJson;
+      
+     
+      res.json(listaCorsi);
+     
+  
+    },utente)
+  });
+
+  app.get('/rimuoviCorso/:utente/:corso',function(req,res){
+    
+    
+    var utente = req.params.utente;
+    var corso = req.params.corso;
+    sqlite.rimuoviCorso(utente,corso);
+    
+    
+  });
+
 //Inizializza il server
 app.listen(8080, function() {
     console.log('listening on 8080');

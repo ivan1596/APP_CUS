@@ -18,6 +18,7 @@ import {CarrelloPage} from '../pages/carrello/carrello';
 import {OrdiniPage} from '../pages/ordini/ordini';
 import {PreferitiPage} from '../pages/preferiti/preferiti';
 import {DatiPersonaliPage} from '../pages/dati-personali/dati-personali';
+import {MieicorsiPage} from '../pages/mieicorsi/mieicorsi';
 
 
 import { StatusBar } from '@ionic-native/status-bar';
@@ -38,7 +39,8 @@ import { AngularFireDatabaseModule } from 'angularfire2/database';
     CarrelloPage,
     OrdiniPage,
     PreferitiPage,
-    DatiPersonaliPage
+    DatiPersonaliPage,
+    MieicorsiPage
   ],
   imports: [
     HttpClientModule,
@@ -63,7 +65,8 @@ import { AngularFireDatabaseModule } from 'angularfire2/database';
     CarrelloPage,
     OrdiniPage,
     PreferitiPage,
-    DatiPersonaliPage
+    DatiPersonaliPage,
+    MieicorsiPage
   ],
   providers: [
     GooglePlus,

@@ -1,5 +1,6 @@
 const sqlite3 = require('sqlite3').verbose();
 const database = './ecommerce.db';
+const databasecorsi = './corsi.db';
 
 module.exports = {
     getProdotti: function (callback) {
@@ -237,6 +238,100 @@ module.exports = {
         });
         db.close();
     },
+
+    getCorsi: function (callback) {
+        let db = new sqlite3.Database(databasecorsi);
+
+        var Corsi = [];
+
+
+        let sql = `SELECT * FROM CORSO`;
+
+        db.all(sql, [], (err, rows) => {
+            if (err) {
+                throw err;
+            }
+            rows.forEach((row) => {
+                
+                var corso = {};
+                corso.nome = row.Nome;
+                corso.istruttore=row.Istruttore;
+                corso.descrizione = row.Descrizione;
+                corso.giorni = row.Giorni;
+                corso.orario = row.Orario;
+                corso.immagine = row.Immagine;
+                Corsi.push(corso);
+                
+                
+            });
+            //call the callback
+            callback(Corsi)
+
+        });
+
+        db.close();
+
+    },
+
+    aggiungiIscritto: function (utente,nomecorso,giorni,orario,immagine) {
+        let db = new sqlite3.Database(databasecorsi);
+        let sql = `INSERT INTO ISCRITTO (NomeUtente,NomeCorso,Orario,Giorni,Immagine)  
+        VALUES (?,?,?,?,?)`;
+        db.run(sql,utente,nomecorso,giorni,orario,immagine, function(err){
+            if (err) {
+                console.error(err.message);
+                }
+            console.log('Ti sei iscritto correttamente');
+    
+            });
+        db.close();
+      
+    },
+
+    getMieiCorsi: function (callback,utente) {
+        let db = new sqlite3.Database(databasecorsi);
+
+        var Corsi = []
+
+
+        let sql = `SELECT * FROM ISCRITTO WHERE NOMEUTENTE = ?`;
+
+        db.all(sql,utente, [], (err, rows) => {
+            if (err) {
+                throw err;
+            }
+            rows.forEach((row) => {
+                
+                var corso = {}; 
+                corso.nome = row.NomeCorso;
+                corso.giorni = row.Giorni;
+                corso.orario = row.Orario;
+                corso.immagine = row.Immagine;
+                Corsi.push(corso);
+                
+            });
+            //call the callback
+            callback(Corsi)
+
+        });
+
+
+        db.close();
+
+    },
+
+    rimuoviCorso: function(utente,corso){
+        let db = new sqlite3.Database(databasecorsi);
+        let sql = 'DELETE FROM ISCRITTO WHERE NOMEUTENTE = ? AND NOMECORSO = ?'
+        db.run(sql,utente,corso,function(err){
+            if(err){
+                console.error(err.message);
+            }
+            console.log('Iscrizione annullata');
+        });
+        db.close();
+    },
+
 
     
 

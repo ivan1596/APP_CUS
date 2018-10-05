@@ -8,6 +8,7 @@ import { PreferitiPage } from '../preferiti/preferiti';
 import { DatiPersonaliPage } from '../dati-personali/dati-personali';
 import { AngularFireDatabase} from 'angularfire2/database';
 import { Observable } from 'rxjs';
+import { MieicorsiPage } from '../mieicorsi/mieicorsi';
 
 @Component({
   selector: 'page-profilo',
@@ -34,6 +35,10 @@ export class ProfiloPage {
 
   goToPreferiti(){
     this.navCtrl.push(PreferitiPage);
+  }
+
+  goToCorsi(){
+    this.navCtrl.push(MieicorsiPage);
   }
 
   logout(){

@@ -5,4 +5,26 @@
     </ion-title>
   </ion-navbar>
 </ion-header>
-<ion-content padding style="background:url(assets/img/PEX4xX7iRUOWqpx33zOI_header_bg.jpg) no-repeat center;background-size:cover;" id="page6"></ion-content>
+<ion-content padding style="background:url(assets/img/PEX4xX7iRUOWqpx33zOI_header_bg.jpg) no-repeat center;background-size:cover;" id="page6">
+  <ion-list  *ngFor="let c of elencoCorsi">
+      <ion-card>
+          <img src="{{c.immagine}}"/>
+          <ion-card-content>
+            <ion-card-title>
+              {{c.nome}}
+              </ion-card-title>
+            <p>
+                Il corso e' tenuto da <b>{{c.istruttore}}</b> il giorno/i <b>{{c.giorni}}</b> alle ore <b>{{c.orario}}</b>.{{c.descrizione}}
+            </p>
+          </ion-card-content>
+          <ion-item>
+            <button ion-button (click)="iscriviti(c)" color="secondary" full>ISCRIVITI</button>
+          </ion-item>
+        </ion-card>
+    
+  </ion-list>
+  <div class="spacer" style="height:15px;" id="negozio-spacer5"></div>
+
+
+
+</ion-content>
