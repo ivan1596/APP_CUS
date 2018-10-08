@@ -266,6 +266,66 @@ app.post('/confermaOrdine',function(req,res){
     
   });
 
+  app.get('/creaAbbonato/:utente',function(req,res){
+    
+    var utente = req.params.utente;
+    var dataCorrente = new Date(); 
+    var scadenza = dataCorrente.getDate() + "/" + (dataCorrente.getMonth()+1)  + "/" + dataCorrente.getFullYear();
+    sqlite.creaAbbonato(utente,scadenza);
+    
+    
+  });
+
+  app.post('/rinnova',function(req,res){
+    //console.log('req.body= ',req.body);
+    var datiRinnovo=JSON.parse(req.body);
+    var utente = datiRinnovo.utente;
+    var tipoRinnovo = datiRinnovo.tipoRinnovo;
+    var dataCorrente = new Date();
+    switch(tipoRinnovo){
+      case tipoRinnovo = 1:
+      var nuovaScadenza = dataCorrente.getDate() + "/" + (dataCorrente.getMonth()+2)  + "/" + dataCorrente.getFullYear();
+      sqlite.rinnovaAbbonamento(nuovaScadenza,utente);
+      break;
+      case tipoRinnovo = 3:
+      var nuovaScadenza = dataCorrente.getDate() + "/" + (dataCorrente.getMonth()+4)  + "/" + dataCorrente.getFullYear();
+      sqlite.rinnovaAbbonamento(nuovaScadenza,utente);
+      break;
+      case tipoRinnovo = 12:
+      var nuovaScadenza = dataCorrente.getDate() + "/" + (dataCorrente.getMonth()+1)  + "/" + (dataCorrente.getFullYear()+1);
+      sqlite.rinnovaAbbonamento(nuovaScadenza,utente);
+      break;
+
+    }
+    
+  });
+
+  app.post('/scadenza', function (req, res) {
+    var ObjUtente = JSON.parse(req.body);
+    var utente = ObjUtente.eUtente;
+    sqlite.getScadenza( function (Scadenza) {
+      var scadenza ={};
+      var listaScadenza={};
+      scadenza.Scadenza = Scadenza;
+      
+      var stringScadenza=JSON.stringify(scadenza);// prodotto stringato del db da parsare 
+      
+      var scadenzaJson= JSON.parse(stringScadenza);
+      
+      //var obj = corsiJson;
+      listaScadenza = scadenzaJson;
+      
+     
+      res.json(listaScadenza);
+     
+  
+    },utente)
+  });
+
+
+
+
+
 //Inizializza il server
 app.listen(8080, function() {
     console.log('listening on 8080');

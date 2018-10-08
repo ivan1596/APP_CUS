@@ -245,7 +245,7 @@ module.exports = {
         var Corsi = [];
 
 
-        let sql = `SELECT * FROM CORSO`;
+        let sql = `SELECT * FROM CORSI`;
 
         db.all(sql, [], (err, rows) => {
             if (err) {
@@ -275,7 +275,7 @@ module.exports = {
 
     aggiungiIscritto: function (utente,nomecorso,giorni,orario,immagine) {
         let db = new sqlite3.Database(databasecorsi);
-        let sql = `INSERT INTO ISCRITTO (NomeUtente,NomeCorso,Orario,Giorni,Immagine)  
+        let sql = `INSERT INTO ISCRITTI (NomeUtente,NomeCorso,Orario,Giorni,Immagine)  
         VALUES (?,?,?,?,?)`;
         db.run(sql,utente,nomecorso,giorni,orario,immagine, function(err){
             if (err) {
@@ -294,7 +294,7 @@ module.exports = {
         var Corsi = []
 
 
-        let sql = `SELECT * FROM ISCRITTO WHERE NOMEUTENTE = ?`;
+        let sql = `SELECT * FROM ISCRITTI WHERE NOMEUTENTE = ?`;
 
         db.all(sql,utente, [], (err, rows) => {
             if (err) {
@@ -322,7 +322,7 @@ module.exports = {
 
     rimuoviCorso: function(utente,corso){
         let db = new sqlite3.Database(databasecorsi);
-        let sql = 'DELETE FROM ISCRITTO WHERE NOMEUTENTE = ? AND NOMECORSO = ?'
+        let sql = 'DELETE FROM ISCRITTI WHERE NOMEUTENTE = ? AND NOMECORSO = ?'
         db.run(sql,utente,corso,function(err){
             if(err){
                 console.error(err.message);
@@ -331,6 +331,66 @@ module.exports = {
         });
         db.close();
     },
+
+    creaAbbonato: function (utente,scadenza) {
+        let db = new sqlite3.Database(databasecorsi);
+        let sql = `INSERT INTO ABBONATI (Utente,Scadenza)  
+        VALUES (?,?)`;
+        db.run(sql,utente,scadenza, function(err){
+            if (err) {
+                console.error(err.message);
+                }
+            console.log('Hai immesso correttamente il nuovo abbonato');
+    
+            });
+        db.close();
+      
+    },
+
+    rinnovaAbbonamento: function(nuovaScadenza,utente){
+        let db = new sqlite3.Database(databasecorsi);
+        let sql = 'UPDATE ABBONATI SET SCADENZA = ? WHERE UTENTE = ?'
+        db.run(sql,nuovaScadenza,utente,function(err){
+            if(err){
+                console.error(err.message);
+            }
+            console.log("Hai rinnovato l' abbonamento");
+        });
+        db.close();
+    },
+
+    getScadenza: function (callback,utente) {
+        let db = new sqlite3.Database(databasecorsi);
+
+        var Scadenza = [];
+
+
+        let sql = `SELECT SCADENZA FROM ABBONATI WHERE UTENTE = ?`;
+
+        db.all(sql,utente, [], (err, rows) => {
+            if (err) {
+                throw err;
+            }
+            rows.forEach((row) => {
+                
+                var scadenza = {}; 
+                scadenza.scadenza = row.Scadenza;
+                
+                Scadenza.push(scadenza);
+                
+            });
+            //call the callback
+            callback(Scadenza);
+
+        });
+
+
+        db.close();
+
+    },
+    
+
+
 
 
     

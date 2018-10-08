@@ -9,6 +9,7 @@ import { DatiPersonaliPage } from '../dati-personali/dati-personali';
 import { AngularFireDatabase} from 'angularfire2/database';
 import { Observable } from 'rxjs';
 import { MieicorsiPage } from '../mieicorsi/mieicorsi';
+import { AbbonamentoPage } from '../abbonamento/abbonamento';
 
 @Component({
   selector: 'page-profilo',
@@ -24,6 +25,10 @@ export class ProfiloPage {
 
   user = firebase.auth().currentUser;
   email = this.user.email;
+
+  goToAbb(){
+    this.navCtrl.push(AbbonamentoPage);
+  }
 
   goToOrdini(){
     this.navCtrl.push(OrdiniPage);

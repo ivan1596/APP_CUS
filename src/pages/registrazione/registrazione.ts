@@ -5,6 +5,8 @@ import {AngularFireAuth} from 'angularfire2/auth';
 import {LoginPage} from '../login/login';
 import {Profilo} from '../../models/profilo';
 import { AngularFireDatabase } from 'angularfire2/database';
+import { Http } from '@angular/http';
+import { map } from 'rxjs/operators';
 
 
 @Component({
@@ -15,7 +17,7 @@ export class RegistrazionePage {
   user={} as User;
   profilo = {} as Profilo;
 
-  constructor(public navCtrl: NavController, private afAuth: AngularFireAuth,private afDatabase : AngularFireDatabase) {
+  constructor(public navCtrl: NavController, private afAuth: AngularFireAuth,private afDatabase : AngularFireDatabase, public http: Http) {
   }
 
   async reg(user : User){
@@ -35,6 +37,15 @@ export class RegistrazionePage {
 
       });
       
-    })
+    });
+    this.creaAbbonato(this.user);
    }
+
+  creaAbbonato(user : User){
+    this.http.get('http://localhost:8080/creaAbbonato/' + user.email).pipe(
+    map(res => res.json())
+    ).subscribe(response => {
+    console.log('GET Response:', response);
+    });
+  }
 }
