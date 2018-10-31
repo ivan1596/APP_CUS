@@ -323,7 +323,31 @@ app.post('/confermaOrdine',function(req,res){
   });
 
 
+//funzioni admin
+app.post('/addProdotto',function(req,res){
+  
+  var prodottoReq=JSON.parse(req.body);
+  var codice = prodottoReq.codice;
+  var nome = prodottoReq.nome;
+  var prezzo = prodottoReq.prezzo;
+  var quantita = prodottoReq.quantita; 
+  var immagine = prodottoReq.immagine;
+  sqlite.aggiungiProdotto(codice,nome,prezzo,quantita,immagine);
+  
+});
 
+app.post('/addCorso',function(req,res){
+  
+  var prodottoReq=JSON.parse(req.body);
+  var nome = prodottoReq.nome;
+  var istruttore = prodottoReq.istruttore;
+  var giorni = prodottoReq.giorni; 
+  var orario = prodottoReq.orario; 
+  var descrizione = prodottoReq.descrizione; 
+  var immagine = prodottoReq.immagine;
+  sqlite.aggiungiCorso(nome,istruttore,giorni,orario,descrizione,immagine);
+  
+});
 
 
 //Inizializza il server

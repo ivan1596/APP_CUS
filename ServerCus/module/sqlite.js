@@ -390,6 +390,36 @@ module.exports = {
     },
     
 
+    aggiungiProdotto: function (codice,nome,prezzo,quantita,img) {
+        let db = new sqlite3.Database(database);
+        let sql = `INSERT INTO CATALOGO (CodiceProd,NomeProd,Prezzo,Quantita,Immagine)  
+        VALUES (?,?,?,?,?)`;
+        db.run(sql,codice,nome,prezzo,quantita,img, function(err){
+            if (err) {
+                console.error(err.message);
+                }
+            console.log('Prodotto aggiunto correttamente!');
+    
+            });
+        db.close();
+      
+    },
+
+    aggiungiCorso: function (nome,istruttore,giorni,orario,descrizione,immagine) {
+        let db = new sqlite3.Database(databasecorsi);
+        let sql = `INSERT INTO CORSI (Nome,Istruttore,Giorni,Orario,Descrizione,Immagine)  
+        VALUES (?,?,?,?,?,?)`;
+        db.run(sql,nome,istruttore,giorni,orario,descrizione,immagine, function(err){
+            if (err) {
+                console.error(err.message);
+                }
+                console.log('Corso aggiunto correttamente!');
+    
+            });
+        db.close();
+      
+    }
+
 
 
 
